@@ -1,72 +1,50 @@
 import React, {useState} from 'react';
+import cn from 'classnames';
+import FileUploadSection from './FileUploadSection';
+import FolderUploadSection from './FolderUploadSection';
+import Dropzone from './Dropzone';
 import './App.css';
 
-const FileUpload = props => (
-  <input
-    type='file'
-    {...props}
+const File = ({className, ...restProps}) => (
+  <li
+    className={cn('File-root', className)}
+    {...restProps}
   />
-)
+);
 
-const FolderUpload = props => (
-  <FileUpload
-    webkitdirectory=''
-  />
-)
+const FileList = ({className, data, ...restProps}) => (
+  <ul
+    className={cn('FileList-root', className)}
+    {...restProps}
+  >
+    {data.map(({name, files}) => {
+      if (files) console.log(name, files.length);
+      return files ? (
+        <File key={name}>
+          {name}
+          <FileList data={files} />
+        </File>
+      ) : (
+        <File key={name}>{name}</File>
+      );
+    })}
+  </ul>
+);
 
-function App() {
-  const [dragOver, setDragOver] = useState(false)
+const App = () => {
+  const [files, setFiles] = useState([]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>Upload a file</p>
-        <FileUpload />
-        <p>Upload a folder</p>
-        <FolderUpload />
-        <p
-          onDragOver={e => {
-            e.preventDefault()
-          }}
-          onDragEnter={e => {
-            e.preventDefault()
-            setDragOver(true)
-          }}
-          onDragLeave={e => {
-            e.preventDefault()
-            setDragOver(false)
-          }}
-          onDrop={e => {
-            setDragOver(false)
-            console.log('file(s) dropped')
-            e.preventDefault()
-            e.stopPropagation()
-
-            const {items, files} = e.dataTransfer
-            if (items) {
-              for (let i = 0; i < items.length; i++) {
-                console.log('item', items[i].kind)
-              }
-            } else {
-              for (let f = 0; f < files.length; f++) {
-                console.log('file', files[f].name)
-              }
-            }
-            console.log('list o files', e.dataTransfer.items)
-          }}
-          style={{
-            border: '2px solid #fff8',
-            background: dragOver && '#fff2',
-            width: '98%',
-            height: '10em',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-          drop files and folders
-        </p>
+        <FileUploadSection />
+        <FolderUploadSection />
+        <Dropzone onDrop={setFiles}/>
+        <p>dropped files</p>
+        <FileList data={files} />
       </header>
     </div>
   );
-}
+};
 
 export default App;
