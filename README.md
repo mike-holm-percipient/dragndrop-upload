@@ -1,3 +1,7 @@
+Drop your files and your folders together!
+
+![demo](https://user-images.githubusercontent.com/60156734/73405737-f24d0580-42b1-11ea-959a-746a2a472493.gif)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
