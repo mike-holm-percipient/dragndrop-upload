@@ -6,6 +6,7 @@ import './App.css';
 
 const App = () => (
     <div className="App">
+      <h1>Open the console to see output</h1>
       <One />
       <Two />
     </div>
