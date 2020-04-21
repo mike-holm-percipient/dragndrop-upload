@@ -1,3 +1,9 @@
+# Example Project
+
+This project is for playing around with various concepts in a stripped down and simple environment. Different branches will have different scenarios in them.
+
+# Create React App
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
